@@ -1,0 +1,17 @@
+# XCODECOURSE
+
+	TYPE OF HACKERS:
+
+	1. Black-hat Hackers - not legacy hacking
+
+	2. White-hat Hackers - legacy hacking
+
+	3. Grey-hat	Hackers - hack any system,
+	не воруют деньги и не наносят вреда
+
+
+Начальные цели курса
+
+	1. Attacker machine - Kali Linux
+	2. Victim 1 - Metasploitable
+	3. Victim 2 - Windows	
