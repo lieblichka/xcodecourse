@@ -1,0 +1,50 @@
+СМЕНА MAC адреса устройства 
+
+MAC ADRESS:
+
+	Media Access Control
+
+	- Permanent # постоянный
+
+	- Physical # физический (на плате)
+
+	- Unique # уникальный (сетевой интерфейс, сетевое устройство)
+
+------------------------mac_address.jpg
+
+У каждого клиента в сети есть свой mac-address
+
+	clien1
+	MAC: 00:11:11:11:11:11
+
+	client2
+	MAC: 00:11:22:33:44:55
+
+	Access Point (AP0)
+	MAC: 00:22:22:22:22:22	
+
+
+	Все пакеты содержат mac_address источника
+	и mac_address назначения --> 
+
+	Source Mac: 00:11:11:11:11:11
+	Destination Mac: 00:22:22:22:22:22
+
+------------------------mac_address2.jpg
+
+ЦЕЛИ ИЗМЕНЕНИЯ MAC-адресса
+
+	- Increase anonymity # сохранение анонимности
+	
+	- Inpersonate other device # выдать свое устройство за чужое
+
+	- Bypass filters # обход фильтрации
+
+------------------------mac_address3.jpg 
+
+
+
+
+
+
+	

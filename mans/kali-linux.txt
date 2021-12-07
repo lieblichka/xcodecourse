@@ -15,4 +15,17 @@ NEED INSTALL PACKAGE:
 
 	apt-get update # обновление пакетов kALI
 
+	
 
+--------------------------------------------
+
+СТОРОННИЕ ПАКЕТЫ и их ЗАПУСК
+
+	1. Download  community version PYCHARM
+	2. Extract files from archive
+	3. Move pycharm directory to /opt/
+
+	DIR: /opt/ # папка для сторонних программ
+	
+	move to dir: /opt/pycharm/bin/
+	ЗАПУСК файла: ./pycharm.sh &	
