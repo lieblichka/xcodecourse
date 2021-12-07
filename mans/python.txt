@@ -1,0 +1,7 @@
+MAN PYTHON
+
+	РАЗЛИЧИЯ МЕЖДУ PYTHON 2 and PYTHON 3
+
+	- PYTHON 3 # last version of python 
+	 целесообразно знание и использование
+	 обеих версий питона

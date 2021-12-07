@@ -1,0 +1,18 @@
+MAN KALI-LINUX
+BASIC LOGIND/PASSWORD=kali/kali
+	
+NEED INSTALL PACKAGE:
+	
+	
+	apt-get install terminator # install multi-screen terminal
+	
+	 - Right-click mouse -> split terminal horisontally
+
+
+
+---------------------------------------------
+	commands:
+
+	apt-get update # обновление пакетов kALI
+
+
