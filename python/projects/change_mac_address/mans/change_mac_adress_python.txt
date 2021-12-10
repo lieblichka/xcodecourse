@@ -1,0 +1,30 @@
+# MAC CHANGER (СМЕНА МАК-адреса)
+
+	РЕАЛИЗАЦИЯ на python c использованием модуля
+	системных команд
+
+	SUBPROCESS MODULE
+
+	
+	- SYNTAX:
+
+	import subprocess
+	subprocess.call("COMMAND",Shell=True)
+
+
+	- исполнение команд выполняется на переднем плане
+
+	- не создаетя фоновый процесс
+
+	- не выделяется поток под команду
+
+------------------------------------------------------	
+	>>> subprocess.call(["ls", "-1"])
+	0
+
+
+	>>> subpocess.call("exit 1", Shell=True)
+	1
+
+
+
