@@ -23,7 +23,7 @@
 	0
 
 
-	>>> subpocess.call("exit 1", Shell=True)
+	>>> subpocess.call("exit 1", shell=True)
 	1
 
 
