@@ -18,13 +18,49 @@
 
 	- не выделяется поток под команду
 
-------------------------------------------------------	
-	>>> subprocess.call(["ls", "-1"])
+	
+	>>> subprocess.call(["ls", "-l"])
 	0
-
+		# вызов системной команды с указанием аргумента
+		 в списке
 
 	>>> subpocess.call("exit 1", shell=True)
 	1
+		# вызов системной каманды одной конструкции
+		 в строке 
+
+
+
+	>>> subprocess.check_output(["echo", "Hello World!"])
+	Hello World!\n
+		# вызов системной команды с последующим возвращением
+		 результата в качестве строки
+
+	>>> subprocess.check_output("exit 1", shell=True)
+	Traceback (most recent call last):
+		...
+
+	subprocess.CalledProcessError: Command 'exit 1' returned exit status 1
+
+---------------------------------------------------------------------------
+
+	import optparse # модуль продвинутого парсинга данных 
+	parser = optparse.OptionParser() # возвращает объект Parser
+	
+	parser.add_option("flag short", "flag long", dest="name of var", 
+		help="подсказка опции")
+	
+	(options, arguments) = parser.parse_args()
+		# вызов функции parser.parse_args() и сохранение в диапазон
+
+	parser.error("Message") # вывод сообщения при ошибке 
+
+
+
+
+
+
+
 
 
 
