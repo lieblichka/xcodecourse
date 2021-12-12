@@ -97,7 +97,7 @@ current_mac = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w:")
 
 
 a = None # NoneObject
-print(str(a)) # привидение NoneObject к стоке
+print(str(a)) # привидение NoneObject к строке
 	# вывод: None
 
 

@@ -43,11 +43,24 @@ def get_current_mac(interface):
 		return current_mac.group(0)
 	return None
 
+def print_mac(mac_address):
+	if mac_address:
+		print ("Current MAC address: " + mac_address)
+	else:
+		print ("[-] Could not read MAC address")
+	
+options = get_arguments() # парсинг входных данных
 
-options = get_arguments()
-change_mac(options.interface, options.new_mac)
-mac_address = get_current_mac(options.interface)
-if mac_address:
-	print ("Current mac address: " + mac_address)
+mac_address = get_current_mac(options.interface) # получение мак-адреса 
+#print_mac(mac_address)
+print("Current MAC: " + str(mac_address))
+
+change_mac(options.interface, options.new_mac) # изменение мак-адреса
+
+mac_address = get_current_mac(options.interface) 
+# получение мак-адреса после изменения
+if mac_address == options.new_mac:
+		print ("[+] MAC address was successfully changed to "
+			+ mac_address)
 else:
-	print ("[-] Could not read mac address")
+		print ("[-] MAC address did not get changed. ")
