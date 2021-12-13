@@ -1,0 +1,74 @@
+NETWORK_SCANNER
+
+Устройства A B C D ROUTER
+
+	- A # RED host (hacker)
+
+	- B
+	# IP: 10.0.15.5
+	# MAC: 00:11:22:33:44:55
+ 
+	- C
+	# IP: 10.0.15.6 
+	# MAC: 00:11:22:33:44:66
+
+	- D
+	# IP: 10.0.15.7 
+	# MAC: 00:11:22:33:44:77
+
+	- ROUTER 
+	# IP: 10.0.15.1
+	# MAC: 00:11:22:33:44:20
+	
+Для установления mac-адреса устройства,
+используется протокол ARP
+
+	ARP - протокол определения адреса
+
+	A -> отправляет широковещательное
+	сообщение ARP REQUEST
+	WHO HAS 10.0.15.6 # у кого этот ip
+	 # пакет будет отправлен на широковещательный адрес
+	   пакет отправится всем клиентам сети 
+
+	- устройства с другим ip проигнорируют пакет
+
+	C -> отправляет пакет на устройство A 
+	содержащий mac-адрес и ip ARP RESPONSE
+	 # пакет I HAVE 10.0.15.6 
+	 # MY MAC is 00:11:22:33:44:66
+
+---------------------------------------------------
+
+ADDITIONAL MODULES SCAPY
+
+git clone www.github.com/secdev/scapy.git
+# github version
+
+Install packet for python
+
+sudo pacman -S python-scapy
+# archlinux version 
+
+apt install python-scapy
+# kali verison 
+
+
+----------------------------------------------------
+
+import scapy.all # сторонний модуль для работы с сетевыми протоколами
+
+or
+
+import scapy.all as scapy # импортировать модуль и переименовать
+	# для удобного пользования модулем
+
+	scapy.all.arping(ip)
+		or
+	scapy.arping(ip)
+
+
+
+
+
+

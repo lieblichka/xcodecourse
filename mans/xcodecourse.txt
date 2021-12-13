@@ -35,3 +35,28 @@
 	-Добавить NAT network в настройках, в случае 
 	отсутствия имени НАТ-сети в глобальных настройках
 	virtualbox добавить ее вручну
+
+Написание программы mac_changer.py
+.....
+
+
+Network_Scanner
+
+	- Discover all devices on the Network
+	# обнаружить все устройства в сети
+
+	- Display their IP address
+	# отобразить их ip-адреса 
+
+	- Display their MAC address
+	# отобразить их mac-адреса
+
+	
+	netdiscover -r 10.2.15.1/24 # Сетевой сканер network discover
+
+Install VM WINDOWS from link
+
+link: https://developer.microsoft.com/en-us/microsoft-edge/tools/vms
+
+
+Написание программы network_scanner.py

@@ -1,0 +1,3 @@
+[submodule "python/additional_modules/scapy"]
+	path = python/additional_modules/scapy
+	url = https://github.com/secdev/scapy
