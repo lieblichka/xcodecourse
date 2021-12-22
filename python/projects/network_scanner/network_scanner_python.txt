@@ -115,10 +115,17 @@ import scapy.all as scapy # импортировать модуль и пере�
 	# BROADCAST REQUEST
 
 	broadcast = scapy.Ether("ff:ff:ff:ff:ff:ff") 
-		# создание ethernet фрейма для выполнения широковещательного запроса 
+		# создание RAW  фрейма для выполнения широковещательного запроса 
 		or 
 	broadcast.dst = "ff:ff:ff:ff:ff:ff"
-	
+		# создание Ethernet фрейма для выполнения широковещательного
+		ARP запроса 
+
+	broadcast.src = scapy.get_if_hwaddr(scapy.conf.iface) 
+		# возвращает текущий мак адрес указанного интерфейса
+		# scapy.conf.iface - текущий интерфейс соединения 
+
+	broadcast.type = "ARP" указание типа запроса
 
 	# CONCAT Ether + ARP
 
@@ -139,7 +146,59 @@ import scapy.all as scapy # импортировать модуль и пере�
 
 	scapy.sr # функция send recieve отправить получить ответ
 
-	scapy.srp(arp_req_broad()) # при кастомном вводе scapy.Ether(dst=)
+	ans, uns = scapy.srp(arp_req_broad(), timeout=10) 
+		# при кастомном вводе scapy.Ether(dst=)
 		# нужно использовать srp так как был поменеян dst Ether 
+		# функция возвращает два списка 
+
+	print(ans.summary()) # выведет ответы на отправленные пакеты
+
+	# LISTS 
+
+	ans = scapy.srp(arp_req_broad(), timeout=10, verbose=False)[0]
+		# scapy.srp[0] # получение только отвеченных пакетов
+		# vebose=False # не выводит краткую информацию об отправке
+	
+	# FOR
+
+	for element in ans: # получение доступа ко всем элементам списка
+		print(ans) # вывот текущего элемента списка
+	
+	
+	# FOR ELEMENT[1]
+
+	print("IP\t\t\t\tMAC address\n------------------------------")	
+	for element in ans: 
+		print(element[1].psrc + "\t\t\t" + print(element[1].hwsrc)
+		# вывод ip-адреса и мак-адреса полученного пакета 
+		# element[0] - отправленныый пакета, element[1] - полученный пакет
+	
+	# DICTONARIES 
+
+	target_client = {"mac":"00:11:22:33:44:55",
+					  "ip":"10.0.2.1", "os":"Windows"}
+
+	print(target_client["mac"]) #	prints 00:11:22:33:44:55
+	print(target_client["ip"]) #	prints 10.0.2.1
+	print(target_client["os"]) #	prints Windows
+
+	# FOR_LIST_DICTONARIES
+
+	clients_list = []
+	for element in answered: 
+		client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
+		clients_list.append(client_dict)
+		print(element[1].psrc + "\t\t\t" + print(element[1].hwsrc)
+	
+	# FOR_CLIENTS_LIST
+
+	print("IP\t\t\t\tMAC address\n------------------------------")	
+	for client in clients_list:
+		print(client["ip"] + "\t\t" + client["mac")
 
 
+
+
+
+	
+	
