@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import scapy.all as scapy # модуль сетевых протоколов 
-import optparse # модуль парсинга аргументов 
+import argparse # новейший модуль парсинга аргументов 
 
 def scany(ip):
 	scapy.arping(ip)
@@ -37,15 +37,16 @@ def scan(ip):
 	# arp_request.summary выводит информацию о пакете
 
 def print_result(results_list):
-	print("IP\t\t\tMAC address\n-------------------------------------")	
-	for client in results_list:
-		print(client["ip"] + "\t\t" + client["mac"])	
+	if results_list:
+		print("IP\t\t\tMAC address\n-------------------------------------")	
+		for client in results_list:
+			print(client["ip"] + "\t\t" + client["mac"])	
 
 def get_arguments():
-	parser = optparse.OptionParser()
-	parser.add_option("-t", "--target", dest="target",
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-t", "--target", dest="target",
 		help="Target IP / IP range.")
-	(options, arguments) = parser.parse_args()
+	options = parser.parse_args()
 	return (options)
 
 options = get_arguments()

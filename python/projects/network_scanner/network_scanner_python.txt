@@ -197,7 +197,21 @@ import scapy.all as scapy # импортировать модуль и пере�
 		print(client["ip"] + "\t\t" + client["mac")
 
 
+	--------------------------------------------------------
 
+	ARGPARSE 
+	
+	import argparse # новейший модуль парсинга данных начиная с python3
+	
+	# обновление методов optparse приостановлено
+	
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-t", "--target", dest="target",
+		help="Target IP / IP range.")
+	options = parser.parse_args()
+
+	# есть различия в синтаксие 
+	
 
 
 	
