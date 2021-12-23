@@ -1,58 +1,80 @@
 #!/usr/bin/env python
 
-import scapy.all as scapy # модуль сетевых протоколов 
-import argparse # новейший модуль парсинга аргументов 
+import scapy.all as scapy 
+import argparse 
+import re 
 
-def scany(ip):
-	scapy.arping(ip)
+def scan_network(options):
+	if options.net_type == "ether":
+		return scan_Ether_Broadcast(options.target) 
+	elif options.net_type == "wlan":
+		return scan_Wireless_Hosts(options.target)
+	else:
+		return None
 
-def scan(ip):
+def scan_Wireless_Hosts(ip):
+	print(ip)
 	if ip == None:
 		return None
-	arp_request = scapy.ARP(pdst=ip) # метод создания ARP пакета
+	clients_list = []
+	if re.search(r"[/\s]\d\d", ip)[0] == "/24":
+		ipv4_partial = re.search(r"\d{,3}.\d{,3}.\d{,3}.", ip)[0]
+		arp_packet = scapy.ARP()
+		broadcast = scapy.Ether("00:00:00:00:00:00")
+		broadcast.src = scapy.get_if_hwaddr(scapy.conf.iface)
+		#broadcast.type = "ARP"
+		arp_packet_broadcast = arp_packet/broadcast 
+		for host in range(130,150):
+			arp_packet_broadcast.pdst = ipv4_partial + str(host)
+			print(arp_packet_broadcast.pdst)
+			ans = scapy.srp1(arp_packet_broadcast, timeout=0.5, 
+				verbose=False)
+			if ans:
+				client_dict = {"ip" : ans[0].psrc, "mac": ans[0].hwsrc}
+				print(client_dict)
+				clients_list.append(client_dict)
+
+	return clients_list
+
+
+def scan_Ether_Broadcast(ip):
+	if ip == None:
+		return None
+	arp_request = scapy.ARP(pdst=ip)
 	broadcast = scapy.Ether()
 	broadcast.dst = "ff:ff:ff:ff:ff:ff"
 	broadcast.src = scapy.get_if_hwaddr(scapy.conf.iface) 
-		# определение исходного мак-адреса
-	#broadcast.type = "ARP" # задание типа марщрутизации 
 	
 	
 	arp_request_broadcast = broadcast/arp_request
-	#arp_request_broadcast.show()
 	answered = scapy.srp(arp_request_broadcast, verbose=False,
-		timeout=10)[0]
+		timeout=20,inter=0.1)[0]
 
 	clients_list = []
 	for element in answered:
 		client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
 		clients_list.append(client_dict)
-		#print(element[1].psrc + "\t\t" + element[1].hwsrc) 
-		# вывод ip и мак адресы полученных пакетов
 	return clients_list
-	#print(answered.summary())
-	#arp_request.show()
-	#broadcast.show()
-	#arp_request.pdst = ip # установка значения поля pdst 
-	#scapy.ls(scapy.ARP()) # выводит инф. о полях пакета экз. класса ARP 
-	# arp_request.summary выводит информацию о пакете
 
 def print_result(results_list):
 	if results_list:
-		print("IP\t\t\tMAC address\n-------------------------------------")	
+		print("IP\t\t\tMAC address\n------------------------------------")
 		for client in results_list:
 			print(client["ip"] + "\t\t" + client["mac"])	
+	else:
+		print("Incorrect format")
 
 def get_arguments():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("-t", "--target", dest="target",
 		help="Target IP / IP range.")
+	parser.add_argument("-nT", "--network_type", dest="net_type",
+		help="Network Type: ether/wlan")
 	options = parser.parse_args()
 	return (options)
 
 options = get_arguments()
-scan_result = scan(options.target)
+scan_result = scan_network(options)
 print_result(scan_result)
 
-#scany("192.168.0.1")  # возвращает мак-адрес устройства по ip
-#scany("192.168.0.1/24") # возвращает маки всех устройств подсети 
 
