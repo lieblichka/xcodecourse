@@ -19,16 +19,13 @@ def scan_Wireless_Hosts(ip):
 	clients_list = []
 	if re.search(r"[/\s]\d\d", ip)[0] == "/24":
 		ipv4_partial = re.search(r"\d{,3}.\d{,3}.\d{,3}.", ip)[0]
-		arp_packet = scapy.ARP()
-		broadcast = scapy.Ether("00:00:00:00:00:00")
-		broadcast.src = scapy.get_if_hwaddr(scapy.conf.iface)
-		#broadcast.type = "ARP"
-		arp_packet_broadcast = arp_packet/broadcast 
-		for host in range(130,150):
-			arp_packet_broadcast.pdst = ipv4_partial + str(host)
-			print(arp_packet_broadcast.pdst)
-			ans = scapy.srp1(arp_packet_broadcast, timeout=0.5, 
-				verbose=False)
+		arp_packet = scapy.Ether()/scapy.ARP(op=1, hwlen=6, plen=4)
+		arp_packet.dst = "ff:ff:ff:ff:ff:ff"
+		arp_packet.hwdst = scapy.getmacbyip(ipv4_partial + '1')
+		for host in range(1,254):
+			arp_packet.pdst = ipv4_partial + str(host)
+			print(arp_packet.pdst)
+			ans = scapy.srp1(arp_packet, timeout=2, verbose=False)
 			if ans:
 				client_dict = {"ip" : ans[0].psrc, "mac": ans[0].hwsrc}
 				print(client_dict)
