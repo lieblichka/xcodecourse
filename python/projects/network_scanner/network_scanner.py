@@ -9,10 +9,33 @@ def scan_network(options):
 		return scan_Ether_Broadcast(options.target) 
 	elif options.net_type == "wlan":
 		return scan_Wireless_Hosts(options.target)
+	elif options.net_type == "wlan-lucky":
+		return scan_Wireless_Hosts_Lucky(options.target)
 	else:
 		return None
 
+
 def scan_Wireless_Hosts(ip):
+	print(ip)
+	if ip == None:
+		return None
+	clients_list = []
+	if re.search(r"[/\s]\d\d", ip)[0] == "/24":
+		ipv4_partial = re.search(r"\d{,3}.\d{,3}.\d{,3}.", ip)[0]
+		arp_packet = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")/scapy.ARP(op=1, 
+			hwlen=6, plen=4)
+		for host in range(1,254):
+			arp_packet.pdst = ipv4_partial + str(host)
+			print(arp_packet.pdst)
+			ans = scapy.srp1(arp_packet, timeout=0.5, verbose=False)
+			if ans:
+				client_dict = {"ip" : ans[0].psrc, "mac": ans[0].hwsrc}
+				print(client_dict)
+				clients_list.append(client_dict)
+
+	return clients_list
+
+def scan_Wireless_Hosts_Lucky(ip):
 	print(ip)
 	if ip == None:
 		return None
@@ -41,8 +64,7 @@ def scan_Ether_Broadcast(ip):
 	broadcast = scapy.Ether()
 	broadcast.dst = "ff:ff:ff:ff:ff:ff"
 	broadcast.src = scapy.get_if_hwaddr(scapy.conf.iface) 
-	
-	
+		
 	arp_request_broadcast = broadcast/arp_request
 	answered = scapy.srp(arp_request_broadcast, verbose=False,
 		timeout=20,inter=0.1)[0]

