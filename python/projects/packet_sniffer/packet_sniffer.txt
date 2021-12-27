@@ -1,0 +1,14 @@
+############## PACKET SNIFFER ###############
+
+CAPTURE AND FILTRED DATA
+
+	 - scapy has a sniffer function 
+
+	 - Can capture data sent to/from iface
+
+	 - Can call a function specified in prn on each packet
+
+
+Перехват пакетов жертвы Main-in-the-middle (Будучи человеком посередине)
+
+

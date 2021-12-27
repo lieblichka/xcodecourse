@@ -1,0 +1,68 @@
+########## PACKET_SNIFFER.py 
+
+Syntax
+
+import scapy.all as scapy 
+
+scapy.sniff(iface=[interface], prn=[call back function])
+
+
+
+	interface="wlp3s0"
+	scapy.sniff(iface=interface, store=False, 
+		prn=process_sniffed, filter="udp/tcp/arp") 
+		# функция перехвата пакетов 
+
+		- iface="wlp3s0" # название интерфейса для перехвата
+
+		- store=False # опция store со значением False
+			# не хранить пакеты в памяти компьютера
+
+		- prn=NameFunction # название функции обратного захвата
+			# функция, которая вызвается каждый раз когда перехвачен
+			# пакет
+
+		- filter="udp/tcp/arp" # BPF фильтр пакетов 
+			- udp # используется для отправки видео, аудио, тф звонков
+			- arp # арп пакеты
+			- tcp # использует 21
+			- port 21 # tcp
+			- port 80 # web servers
+
+---------------------------
+	def process_sniffed(packet):
+		print(packet)	
+	
+	sniff("wlp3s0") # прослушивать трафик на указанном интерфейсе 
+
+
+
+
+-----------------------------
+FILTER  scapy
+# К сожалению встроенный BPF filter не позволяет перехватывать
+более сложные пакеты
+		
+		- pip install scapy-http # установка модуля http
+
+		from scapy.layers import http
+
+		def process_sniffed(packet):
+			if packet.haslayer(http.HTTPRequest): # http пакеты 
+				print(packet) # вывод содержимого пакета
+
+		
+		- print(packet.show())
+		# более структурированный вывод перехваченного пакета 
+	 	
+		if packet.haslayer(http.HTTPRequest):
+			if packet.haslayer(scapy.Raw):
+				load = packet[scapy.Raw].load
+				if "username" in load
+					print(load)
+		# на этом уровне находится данные авторизации 
+		
+		
+-------------------
+
+		 
